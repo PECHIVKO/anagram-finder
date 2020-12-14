@@ -5,13 +5,11 @@ import (
 	"net/http"
 
 	"github.com/PECHIVKO/anagram-finder/api/router"
-	"github.com/PECHIVKO/anagram-finder/models"
+	"github.com/PECHIVKO/anagram-finder/service"
 )
 
-// var Server *http.Server
-
-func Run(port string, d *models.Dictionary) {
-	//
+func Run(port string, d *service.Dictionary) {
+	// Init Session
 	Session := &http.Server{
 		Addr:    port,
 		Handler: router.NewRouter(d),

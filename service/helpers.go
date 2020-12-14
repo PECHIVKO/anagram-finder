@@ -3,8 +3,6 @@ package service
 import (
 	"sort"
 	"unicode"
-
-	"github.com/PECHIVKO/anagram-finder/models"
 )
 
 func stringToRuneSlice(s string) []rune {
@@ -23,7 +21,8 @@ func sortStringByCharacter(s string) string {
 	return string(r)
 }
 
-func isDuplicate(as models.AnagramSlice, word string) bool {
+// isDuplicate checks if word is already in Dictionary
+func isDuplicate(as AnagramSlice, word string) bool {
 	for _, a := range as {
 		if a == word {
 			return true

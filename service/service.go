@@ -3,11 +3,14 @@ package service
 import (
 	"fmt"
 	"strings"
-
-	"github.com/PECHIVKO/anagram-finder/models"
 )
 
-func (d models.Dictionary) LoadDictionary(input []string) {
+type AnagramSlice []string
+
+type Dictionary map[string]AnagramSlice
+
+// LoadDictionary loads words to Dictionary
+func (d Dictionary) LoadDictionary(input []string) {
 	for _, word := range input {
 		sortedWord := sortStringByCharacter(word)
 		if _, found := d[sortedWord]; found {
@@ -15,12 +18,17 @@ func (d models.Dictionary) LoadDictionary(input []string) {
 				d[sortedWord] = append(d[sortedWord], word)
 			}
 		} else {
-			d[sortedWord] = models.AnagramSlice{word}
+			d[sortedWord] = AnagramSlice{word}
 		}
 	}
 }
 
-func (d models.Dictionary) Finder(word string) (result models.AnagramSlice, err error) {
+// FindAnagrams finds all anagrams in Dictionary for word
+func (d Dictionary) FindAnagrams(word string) (result AnagramSlice, err error) {
+	if len(d) == 0 {
+		err = fmt.Errorf("Dictionary is empty. Please load words.")
+		return result, err
+	}
 	sortedWord := strings.ToLower(sortStringByCharacter(word))
 	if _, found := d[sortedWord]; found {
 		result = d[sortedWord]
